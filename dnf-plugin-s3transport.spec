@@ -18,6 +18,8 @@ Uses boto3 to authenticate and retrieve packages from S3 buckets.
 Summary:        A DNF plugin to access repositories stored on S3
 %{?python_provide:%python_provide python3-%{name}}
 
+BuildRequires:  python3-devel
+
 Requires:       python3-dnf
 Requires:       python3-boto3
 
