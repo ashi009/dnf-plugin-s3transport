@@ -39,16 +39,11 @@ install -p -m 644 s3transport.py %{buildroot}%{python3_sitelib}/dnf-plugins/
 mkdir -p %{buildroot}%{_sysconfdir}/dnf/plugins
 install -p -m 644 s3transport.conf %{buildroot}%{_sysconfdir}/dnf/plugins/
 
-# Install the repo example file
-mkdir -p %{buildroot}%{_sysconfdir}/yum.repos.d
-install -p -m 644 s3.repo %{buildroot}%{_sysconfdir}/yum.repos.d/s3.repo.example
-
 %files -n python3-%{name}
 %license LICENSE
 %doc README.md
 %{python3_sitelib}/dnf-plugins/s3transport.py
 %config(noreplace) %{_sysconfdir}/dnf/plugins/s3transport.conf
-%{_sysconfdir}/yum.repos.d/s3.repo.example
 
 %changelog
 * Thu May 16 2025 Xiaoyi Shi <ashi009@gmail.com> - 1.0.0-1
