@@ -14,7 +14,8 @@ import botocore.exceptions
 logger = logging.getLogger("dnf.plugin.s3transport")
 
 
-HOST_PATTERN = r"^(?P<bucket>[\w.-]+)\.s3\.(?P<region>[\w-]+)\.amazonaws\.com"
+HOST_PATTERN = r"^(?P<bucket>[^.]+)\.s3\.(?P<region>[\w-]+)\.amazonaws\.com"
+
 
 class S3TransportPlugin(dnf.Plugin):
     name = "s3transport"
@@ -23,7 +24,7 @@ class S3TransportPlugin(dnf.Plugin):
         super(S3TransportPlugin, self).__init__(base, cli)
         self.base = base
         self._aws_config_file = None
-        self._aws_credential_file = None
+        self._aws_credentials_file = None
         self._proxy_process = None
         self._proxy_url = None
 
@@ -37,6 +38,8 @@ class S3TransportPlugin(dnf.Plugin):
             env = os.environ.copy()
             if self._aws_config_file:
                 env["AWS_CONFIG_FILE"] = self._aws_config_file
+            if self._aws_credentials_file:
+                env["AWS_SHARED_CREDENTIALS_FILE"] = self._aws_credentials_file
             # Start proxy in separate process to avoid GIL contention with DNF
             self._proxy_process = subprocess.Popen(
                 [sys.executable, __file__],
@@ -50,17 +53,21 @@ class S3TransportPlugin(dnf.Plugin):
 
     def config(self):
         conf = self.read_config(self.base.conf)
-        if not conf.has_section('main') or not conf.getboolean("main", "enabled"):
+        if not conf.has_section("main") or not conf.getboolean("main", "enabled"):
             return
 
-        if conf.has_option("aws"):
+        if conf.has_section("aws"):
             if conf.has_option("aws", "config_file"):
                 self._aws_config_file = conf.get("aws", "config_file")
+            if conf.has_option("aws", "credentials_file"):
+                self._aws_credentials_file = conf.get("aws", "credentials_file")
 
         for repo in self.base.repos.iter_enabled():
             for url in repo.baseurl:
                 parsed_url = urllib.parse.urlparse(url)
-                if parsed_url.scheme == 'http' and re.match(HOST_PATTERN, parsed_url.netloc):
+                if parsed_url.scheme == "http" and re.match(
+                    HOST_PATTERN, parsed_url.netloc
+                ):
                     repo.proxy = self._start_proxy_if_needed()
                     break
 
@@ -101,8 +108,13 @@ class S3ProxyHandler(http.server.BaseHTTPRequestHandler):
             s3_object = s3.get_object(Bucket=bucket_name, Key=s3_key)
             self.send_response(200)
             self.send_header("Content-Length", str(s3_object["ContentLength"]))
-            self.send_header("Content-Type", s3_object.get("ContentType", "application/octet-stream"))
-            self.send_header("Last-Modified", s3_object["LastModified"].strftime("%a, %d %b %Y %H:%M:%S GMT"))
+            self.send_header(
+                "Content-Type", s3_object.get("ContentType", "application/octet-stream")
+            )
+            self.send_header(
+                "Last-Modified",
+                s3_object["LastModified"].strftime("%a, %d %b %Y %H:%M:%S GMT"),
+            )
             self.end_headers()
             body = s3_object["Body"]
             try:

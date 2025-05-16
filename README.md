@@ -46,6 +46,9 @@ enabled=1
 
 [aws]
 config_file=/etc/aws/config
+credentials_file=/etc/aws/credentials
 ```
 
-The `config_file` parameter in the `[aws]` section is optional. If not specified, the plugin uses the default AWS configuration location.
+The `config_file` parameter is optional. If not specified, the default AWS configuration location (`~/.aws/config`) is used.
+
+The `credentials_file` parameter is optional. If not specified, the default AWS credentials location (`~/.aws/credentials`) is used.
