@@ -46,6 +46,7 @@ install -p -m 644 s3transport.conf %{buildroot}%{_sysconfdir}/dnf/plugins/
 %license LICENSE
 %doc README.md
 %{python3_sitelib}/dnf-plugins/s3transport.py
+%{python3_sitelib}/dnf-plugins/__pycache__/s3transport.*
 %config(noreplace) %{_sysconfdir}/dnf/plugins/s3transport.conf
 
 %changelog
