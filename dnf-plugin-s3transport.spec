@@ -49,3 +49,7 @@ install -p -m 644 s3.repo %{buildroot}%{_sysconfdir}/yum.repos.d/s3.repo.example
 %{python3_sitelib}/dnf-plugins/s3transport.py
 %config(noreplace) %{_sysconfdir}/dnf/plugins/s3transport.conf
 %{_sysconfdir}/yum.repos.d/s3.repo.example
+
+%changelog
+* Thu May 16 2025 Xiaoyi Shi <ashi009@gmail.com> - 1.0.0-1
+- Initial package
