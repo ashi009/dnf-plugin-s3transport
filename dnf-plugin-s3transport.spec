@@ -6,7 +6,7 @@ Summary:        A DNF plugin to access repositories stored on S3
 License:        MIT
 URL:            https://github.com/ashi009/dnf-plugin-s3transport
 VCS:            {{{ git_dir_vcs }}}
-Source:         {{{ git_dir_archive }}}
+Source:         {{{ git_dir_pack }}}
 
 BuildArch:      noarch
 
@@ -26,7 +26,7 @@ A DNF plugin that adds support for accessing RPM repositories stored on AWS S3.
 Uses boto3 to authenticate and retrieve packages from S3 buckets.
 
 %prep
-%autosetup
+{{{ git_dir_setup_macro }}}
 
 %build
 # No build required
@@ -47,4 +47,4 @@ install -p -m 644 s3transport.conf %{buildroot}%{_sysconfdir}/dnf/plugins/
 %config(noreplace) %{_sysconfdir}/dnf/plugins/s3transport.conf
 
 %changelog
-%autochangelog
+{{{ git_dir_changelog }}}
