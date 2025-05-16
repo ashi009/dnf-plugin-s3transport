@@ -1,5 +1,7 @@
 # DNF S3Transport Plugin
 
+[![Copr build status](https://copr.fedorainfracloud.org/coprs/ashi009/dnf-plugin-s3transport/package/dnf-plugin-s3transport/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/ashi009/dnf-plugin-s3transport/package/dnf-plugin-s3transport/)
+
 A [DNF](https://github.com/rpm-software-management/dnf) plugin that adds support for accessing RPM repositories stored on AWS S3.
 
 ## Features
