@@ -84,7 +84,7 @@ class S3ProxyHandler(http.server.BaseHTTPRequestHandler):
         with cls._s3_client_cache_lock:
             cache_key = (profile_name, region_name)
             if cache_key not in cls._s3_client_cache:
-                args = {region_name: region_name}
+                args = {"region_name": region_name}
                 if profile_name:
                     args["profile_name"] = profile_name
                 session = boto3.Session(**args)
