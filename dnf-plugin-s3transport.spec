@@ -46,5 +46,4 @@ install -p -m 644 s3transport.conf %{buildroot}%{_sysconfdir}/dnf/plugins/
 %config(noreplace) %{_sysconfdir}/dnf/plugins/s3transport.conf
 
 %changelog
-* Thu May 16 2025 Xiaoyi Shi <ashi009@gmail.com> - 1.0.0-1
-- Initial package
+%autochangelog
