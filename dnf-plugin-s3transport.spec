@@ -1,11 +1,12 @@
 Name:           dnf-plugin-s3transport
-Version:        1.0.0
+Version:        {{{ git_dir_version }}}
 Release:        1%{?dist}
 Summary:        A DNF plugin to access repositories stored on S3
 
 License:        MIT
 URL:            https://github.com/ashi009/dnf-plugin-s3transport
-Source0:        %{url}/archive/%{committish}.zip
+VCS:            {{{ git_dir_vcs }}}
+Source:         {{{ git_dir_pack }}}
 
 BuildArch:      noarch
 
