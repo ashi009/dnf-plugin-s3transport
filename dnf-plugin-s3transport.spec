@@ -4,8 +4,7 @@ Release:        1%{?dist}
 Summary:        A DNF plugin to access repositories stored on S3
 
 License:        MIT
-URL:            https://github.com/xiaoyishi/dnf-plugin-s3transport
-Source0:        %{name}-%{version}.tar.gz
+URL:            https://github.com/ashi009/dnf-plugin-s3transport
 
 BuildArch:      noarch
 
@@ -25,7 +24,7 @@ A DNF plugin that adds support for accessing RPM repositories stored on AWS S3.
 Uses boto3 to authenticate and retrieve packages from S3 buckets.
 
 %prep
-%setup -q
+%autosetup
 
 %build
 # No build required
