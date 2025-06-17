@@ -101,7 +101,7 @@ class S3ProxyHandler(http.server.BaseHTTPRequestHandler):
         profile_name = query_params.get("profile", [None])[0]
         bucket_name = match.group("bucket")
         region_name = match.group("region")
-        s3_key = parsed_url.path.lstrip("/")
+        s3_key = urllib.parse.unquote(parsed_url.path.lstrip("/"))
         logger.debug(f"Processing request for Bucket='{bucket_name}', Key='{s3_key}'")
         try:
             s3 = S3ProxyHandler.get_s3_client(profile_name, region_name)
